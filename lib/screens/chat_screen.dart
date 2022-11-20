@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/components/rounded_button.dart';
 
 class ChatScreen extends StatefulWidget {
   static String id = "chat_screen";
