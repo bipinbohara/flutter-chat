@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "31518784628",
+    "project_id": "flashchat-ec9fb",
+    "storage_bucket": "flashchat-ec9fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31518784628:android:1106b30710565166fe2521",
+        "android_client_info": {
+          "package_name": "co.bipinbohara.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31518784628-9u4ruh2f1475vknrsqo18onuu9spjl7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfPz81LH3wbnwH1vFZNVgugl1OyVQQm6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "31518784628-9u4ruh2f1475vknrsqo18onuu9spjl7i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
