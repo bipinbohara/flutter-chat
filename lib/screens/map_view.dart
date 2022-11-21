@@ -37,8 +37,6 @@ class _MapScreenState extends State<MapScreen> {
 
 // Get Real-Time Location
 class GetCurrentLocation extends StatelessWidget {
-  var _LatLongValue = LatLng(27.7172, 85.3240);
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<LocationData>(
@@ -54,11 +52,11 @@ class GetCurrentLocation extends StatelessWidget {
         print(snapshot.data);
         final LocationData currentLocation = snapshot.data;
 
-        _LatLongValue =
-            LatLng(currentLocation.latitude, currentLocation.longitude);
+        final latLongValue =
+            new LatLng(currentLocation.latitude, currentLocation.longitude);
 
         return FlutterMap(
-          options: new MapOptions(center: _LatLongValue, zoom: 13.0),
+          options: new MapOptions(center: latLongValue, zoom: 13.0),
           nonRotatedChildren: [
             AttributionWidget.defaultWidget(
               source: 'OpenStreetMap',
@@ -78,7 +76,7 @@ class GetCurrentLocation extends StatelessWidget {
                 new Marker(
                   width: 80.0,
                   height: 80.0,
-                  point: _LatLongValue,
+                  point: latLongValue,
                   builder: (BuildContext context) => const Icon(
                       Icons.location_on,
                       size: 60.0,

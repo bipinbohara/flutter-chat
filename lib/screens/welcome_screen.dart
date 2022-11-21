@@ -57,7 +57,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ),
                 AnimatedTextKit(animatedTexts: [
                   WavyAnimatedText(
-                    'Flash Chat',
+                    'HackFest',
                     textStyle: TextStyle(
                       fontSize: 45.0,
                       fontWeight: FontWeight.w900,
