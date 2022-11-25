@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash_chat/driver/driver_main.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/components/rounded_button.dart';
@@ -7,6 +9,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../user/map_view_user.dart';
 import 'map_view.dart';
 
+final _firestore = FirebaseFirestore.instance;
+
 class LoginScreen extends StatefulWidget {
   static String id = "login_screen";
   @override
@@ -15,6 +19,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
+  final _userUid =
+      _firestore.collection('users').doc('OR3Oy9cv1RVd8Jk2lioXMSWJY8z1');
   bool showSpinner = false;
   String email;
   String password;
@@ -68,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24.0,
               ),
               RoundedButton(
-                title: "Login In",
+                title: "Log In",
                 colour: Colors.blueAccent,
                 onPressed: () async {
                   setState(() {
@@ -78,8 +84,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
-                      // Navigator.pushNamed(context, MapScreen.id);
-                      Navigator.pushNamed(context, MapScreenUser.id);
+                      if (_auth.currentUser.uid ==
+                          "OR3Oy9cv1RVd8Jk2lioXMSWJY8z1") {
+                        Navigator.pushNamed(context, DriverMain.id);
+                      }
+                      if (_auth.currentUser.uid ==
+                          "EQeXR1MUMDQ23gDQBqj7zgdfqe03") {
+                        Navigator.pushNamed(context, MapScreen.id);
+                      }
+                      //Navigator.pushNamed(context, ChatScreen.id);
                     }
                     setState(() {
                       showSpinner = false;

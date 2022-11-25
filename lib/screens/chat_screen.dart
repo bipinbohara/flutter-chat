@@ -31,7 +31,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
       if (user != null) {
         loggedInUser = user;
+        print("UserID: " + loggedInUser.uid);
       }
+      print("UserID: " + loggedInUser.uid);
     } catch (e) {
       print(e);
     }
