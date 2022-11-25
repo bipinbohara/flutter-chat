@@ -22,6 +22,8 @@ class DriverMapScreen extends StatefulWidget {
 
 class _DriverMapScreenState extends State<DriverMapScreen> {
   final _auth = FirebaseAuth.instance;
+  final _employeeDetails =
+      _firestore.collection('users').doc('OR3Oy9cv1RVd8Jk2lioXMSWJY8z1');
 
   @override
   void initState() {

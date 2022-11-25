@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/driver/driver_data_screen.dart';
 import 'package:flash_chat/driver/driver_main.dart';
 import 'package:flash_chat/driver/driver_map_screen.dart';
+import 'package:flash_chat/driver/employee_details_screen.dart';
 import 'package:flash_chat/screens/map_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
@@ -34,6 +35,9 @@ class FlashChat extends StatelessWidget {
         DriverMain.id: (context) => DriverMain(),
         DriverMapScreen.id: (context) => DriverMapScreen(),
         DriverDataScreen.id: (context) => DriverDataScreen(),
+
+        //Employee
+        EmployeeDetail.id: (context) => EmployeeDetail(),
       },
     );
   }
