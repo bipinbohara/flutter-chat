@@ -7,13 +7,13 @@ import "dart:convert" as convert;
 import 'package:location/location.dart';
 
 User loggedin;
-class MapScreen extends StatefulWidget {
-  static String id = "map_view";
+class MapScreenUser extends StatefulWidget {
+  static String id = "map_view_for_user";
   @override
   _MapScreenState createState() => _MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapScreenState extends State<MapScreenUser> {
   //final String apiKey = "8YO7lZRPUyq5TY9Lx1hufSLsGmn1gWUe";
 
   @override
@@ -21,16 +21,21 @@ class _MapScreenState extends State<MapScreen> {
     return MaterialApp(
       title: "Map",
       home: Scaffold(
-        body: Center(
-          child: Stack(
+        body: Column(
             children: <Widget>[
-              StreamBuilder(
-                  stream: Stream.periodic(const Duration(seconds: 5)),
-                  builder: (context, snapshot) {
-                    return GetCurrentLocation();
-                  }),
+              Spacer(flex: 1),
+              Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.red
+                    ),
+              Expanded(
+                  child: StreamBuilder(
+                      stream: Stream.periodic(const Duration(seconds: 5)),
+                      builder: (context, snapshot) {
+                        return GetCurrentLocation();
+                      }))
             ],
-          ),
         ),
       ),
     );
@@ -95,6 +100,7 @@ class GetCurrentLocation extends StatelessWidget {
 
 //Location Permission
 Future<LocationData> _currentLocation() async {
+  print("Here!!!!!!!!!!!!!!!");
   bool serviceEnabled;
   PermissionStatus permissionGranted;
   Location location = new Location();

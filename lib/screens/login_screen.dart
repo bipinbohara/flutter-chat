@@ -4,6 +4,7 @@ import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import '../user/map_view_user.dart';
 import 'map_view.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -77,7 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
-                      Navigator.pushNamed(context, MapScreen.id);
+                      // Navigator.pushNamed(context, MapScreen.id);
+                      Navigator.pushNamed(context, MapScreenUser.id);
                     }
                     setState(() {
                       showSpinner = false;

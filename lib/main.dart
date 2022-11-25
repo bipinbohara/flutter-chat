@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/screens/map_view.dart';
+import 'package:flash_chat/user/map_view_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/map_view.dart';
+import 'package:flash_chat/user/map_view_user.dart';
 
 void main() async {
   //Ensure that Firebase is initialized
@@ -28,6 +31,7 @@ class FlashChat extends StatelessWidget {
         RegistrationScreen.id: (context) => RegistrationScreen(),
         ChatScreen.id: (context) => ChatScreen(),
         MapScreen.id: (context) => MapScreen(),
+        MapScreenUser.id: (context) => MapScreenUser()
       },
     );
   }
