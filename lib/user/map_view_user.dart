@@ -23,12 +23,6 @@ class _MapScreenState extends State<MapScreenUser> {
       home: Scaffold(
         body: Column(
             children: <Widget>[
-              Spacer(flex: 1),
-              Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.red
-                    ),
               Expanded(
                   child: StreamBuilder(
                       stream: Stream.periodic(const Duration(seconds: 5)),
@@ -41,6 +35,7 @@ class _MapScreenState extends State<MapScreenUser> {
     );
   }
 }
+
 
 // Get Real-Time Location
 class GetCurrentLocation extends StatelessWidget {
