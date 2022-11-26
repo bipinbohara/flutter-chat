@@ -169,17 +169,6 @@ class EmployeeStream extends StatelessWidget {
           if(!routeOfDriver.contains(employeeData['route']) && !driverShift.contains(employeeData['shift'])){
             continue;
           }
-          // if (employeeData['role'] == "driver") {
-          //   driverRoute = employeeData['route'];
-          // }
-          print("Driver Route: " + routeOfDriver);
-          print("Employee route: " + employeeData['route']);
-
-          /*if (driverRoute != employeeData['route']) {
-            print("Driver Route: " + driverRoute);
-            continue;
-          }*/
-
           final currentUser = loggedInUser.email;
           final employeeBubble = EmployeeBubble(
             name: employeeName,
