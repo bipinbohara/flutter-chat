@@ -229,15 +229,15 @@ class EmployeeBubble extends StatelessWidget {
           ),*/
           Material(
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30.0),
-              topLeft: Radius.circular(30.0),
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
+              topRight: Radius.circular(0.0),
+              topLeft: Radius.circular(0.0),
+              bottomLeft: Radius.circular(0.0),
+              bottomRight: Radius.circular(0.0),
             ),
             elevation: 5.0,
             color: Colors.lightBlueAccent,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
               child: Text(
                 name + ": " + phoneNumber,
                 style: TextStyle(
