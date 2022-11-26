@@ -7,6 +7,7 @@ import "dart:convert" as convert;
 import 'package:location/location.dart';
 
 User loggedin;
+
 class UserMapScreen extends StatefulWidget {
   static String id = "map_view_for_user";
   @override
@@ -22,20 +23,19 @@ class _MapScreenState extends State<UserMapScreen> {
       title: "Map",
       home: Scaffold(
         body: Column(
-            children: <Widget>[
-              Expanded(
-                  child: StreamBuilder(
-                      stream: Stream.periodic(const Duration(seconds: 5)),
-                      builder: (context, snapshot) {
-                        return GetCurrentLocation();
-                      }))
-            ],
+          children: <Widget>[
+            Expanded(
+                child: StreamBuilder(
+                    stream: Stream.periodic(const Duration(seconds: 5)),
+                    builder: (context, snapshot) {
+                      return GetCurrentLocation();
+                    }))
+          ],
         ),
       ),
     );
   }
 }
-
 
 // Get Real-Time Location
 class GetCurrentLocation extends StatelessWidget {
@@ -53,7 +53,9 @@ class GetCurrentLocation extends StatelessWidget {
         }
         print(snapshot.data);
         final LocationData currentLocation = snapshot.data;
-
+        final latLongUserValue = new LatLng(27.688300,
+            85.335585 /*currentLocation.latitude, currentLocation.longitude*/
+            );
         final latLongValue =
             new LatLng(currentLocation.latitude, currentLocation.longitude);
 
@@ -73,16 +75,41 @@ class GetCurrentLocation extends StatelessWidget {
               urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
               subdomains: ['a', 'b', 'c'],
             ),
+            new PolylineLayer(
+              polylineCulling: false,
+              polylines: [
+                Polyline(
+                  points: [
+                    LatLng(27.688300, 85.335585),
+                    LatLng(27.694767, 85.320774),
+                    LatLng(27.711656, 85.322068),
+                  ],
+                  color: Colors.blue,
+                  strokeWidth: 4,
+                )
+              ],
+            ),
+            new MarkerLayer(
+              markers: [
+                new Marker(
+                  width: 80.0,
+                  height: 80.0,
+                  point: latLongUserValue,
+                  builder: (BuildContext context) => const Icon(
+                      Icons.location_on,
+                      size: 60.0,
+                      color: Colors.lightBlue),
+                ),
+              ],
+            ),
             new MarkerLayer(
               markers: [
                 new Marker(
                   width: 80.0,
                   height: 80.0,
                   point: latLongValue,
-                  builder: (BuildContext context) => const Icon(
-                      Icons.location_on,
-                      size: 60.0,
-                      color: Colors.lightBlue),
+                  builder: (BuildContext context) => const Icon(Icons.train,
+                      size: 60.0, color: Colors.lightBlue),
                 ),
               ],
             ),

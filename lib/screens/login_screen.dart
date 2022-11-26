@@ -91,7 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushNamed(context, DriverMain.id);
                       }
                       if (_auth.currentUser.uid ==
-                          "EQeXR1MUMDQ23gDQBqj7zgdfqe03") {
+                              "EQeXR1MUMDQ23gDQBqj7zgdfqe03" ||
+                          _auth.currentUser.uid ==
+                              "uIuDTEUiEAhqfwOFa2N0xJvxxug2") {
                         Navigator.pushNamed(context, UserMain.id);
                       }
                       //Navigator.pushNamed(context, ChatScreen.id);

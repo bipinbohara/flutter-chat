@@ -61,7 +61,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     textStyle: TextStyle(
                       fontSize: 45.0,
                       fontWeight: FontWeight.w900,
-                      color: Colors.deepOrange,
+                      color: Color.fromRGBO(159, 16, 134, 1),
                     ),
                   ),
                 ]),

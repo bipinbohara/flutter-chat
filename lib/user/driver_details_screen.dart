@@ -13,16 +13,14 @@ import '../screens/registration_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedInUser;
-String routeOfDriver;
-String driverShift;
 
-class EmployeeDetail extends StatefulWidget {
-  static String id = "employee_detail_screen";
+class DriverDetail extends StatefulWidget {
+  static String id = "driver_detail_screen";
   @override
-  _EmployeeDetailState createState() => _EmployeeDetailState();
+  _DriverDetailState createState() => _DriverDetailState();
 }
 
-class _EmployeeDetailState extends State<EmployeeDetail> {
+class _DriverDetailState extends State<DriverDetail> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
@@ -125,7 +123,6 @@ class _EmployeeDetailState extends State<EmployeeDetail> {
 class EmployeeStream extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
 
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -140,13 +137,10 @@ class EmployeeStream extends StatelessWidget {
         }
         final _employeeData = snapshot.data.docs;
         List<EmployeeBubble> employeeBubbles = [];
-        final countData = _employeeData.length;
-        // for (var employee in _employeeData) {
-        for (var i = 0; i < countData; i++) {
-          var employee = _employeeData[i];
+        for (var employee in _employeeData) {
           final employeeData = employee.data();
           // Check route
-          // String driverRoute;
+          String driverRoute;
 
           final employeeName = employeeData['name'];
           //print("Name: " + employeeName);
@@ -161,19 +155,13 @@ class EmployeeStream extends StatelessWidget {
           //print("UID: " + employeeUid);
           final employeeRole = employeeData['role'];
           //print("Role: " + employeeRole);
-          if (employeeData['role'] == "driver") {
-            routeOfDriver = employeeData['route'];
-            driverShift = employeeData['shift'];
+
+          if (employeeData['role'] == "user") {
+            driverRoute = employeeData['route'];
+            print("Driver Route: " + driverRoute);
+            print("Employee Route: " + employeeData['route']);
             continue;
           }
-          if(!routeOfDriver.contains(employeeData['route']) && !driverShift.contains(employeeData['shift'])){
-            continue;
-          }
-          // if (employeeData['role'] == "driver") {
-          //   driverRoute = employeeData['route'];
-          // }
-          print("Driver Route: " + routeOfDriver);
-          print("Employee route: " + employeeData['route']);
 
           /*if (driverRoute != employeeData['route']) {
             print("Driver Route: " + driverRoute);
@@ -241,15 +229,15 @@ class EmployeeBubble extends StatelessWidget {
           ),*/
           Material(
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(0.0),
-              topLeft: Radius.circular(0.0),
-              bottomLeft: Radius.circular(0.0),
-              bottomRight: Radius.circular(0.0),
+              topRight: Radius.circular(30.0),
+              topLeft: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
             ),
             elevation: 5.0,
             color: Colors.lightBlueAccent,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 name + ": " + phoneNumber,
                 style: TextStyle(
@@ -297,6 +285,6 @@ class DataUser {
       print(name);
       return name;
     } else
-      return "Jack Sparrow";
+      return "Success Shrestha";
   }
 }

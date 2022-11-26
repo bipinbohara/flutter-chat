@@ -67,11 +67,11 @@ class _DriverMainState extends State<DriverMain> {
                 ),
                 AnimatedTextKit(animatedTexts: [
                   WavyAnimatedText(
-                    'HackFest',
+                    'Cotiviti Go',
                     textStyle: TextStyle(
                       fontSize: 45.0,
                       fontWeight: FontWeight.w900,
-                      color: Colors.grey,
+                      color: Color.fromRGBO(159, 16, 134, 1),
                     ),
                   ),
                 ]),

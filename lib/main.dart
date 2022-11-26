@@ -5,6 +5,7 @@ import 'package:flash_chat/driver/driver_main.dart';
 import 'package:flash_chat/driver/driver_map_screen.dart';
 import 'package:flash_chat/driver/employee_details_screen.dart';
 import 'package:flash_chat/screens/map_view.dart';
+import 'package:flash_chat/user/driver_details_screen.dart';
 import 'package:flash_chat/user/user_data_screen.dart';
 import 'package:flash_chat/user/user_map_screen.dart';
 import 'package:flash_chat/user/user_main.dart';
@@ -37,14 +38,16 @@ class FlashChat extends StatelessWidget {
         RegistrationScreen.id: (context) => RegistrationScreen(),
         ChatScreen.id: (context) => ChatScreen(),
         MapScreen.id: (context) => MapScreen(),
-        DriverMain.id: (context) => DriverMain(),
-        DriverMapScreen.id: (context) => DriverMapScreen(),
-        DriverDataScreen.id: (context) => DriverDataScreen(),
+
         UserMain.id: (context) => UserMain(),
         UserMapScreen.id: (context) => UserMapScreen(),
         UserDataScreen.id: (context) => UserDataScreen(),
+        DriverDetail.id: (context) => DriverDetail(),
 
-        //Employee
+        //Driver
+        DriverMain.id: (context) => DriverMain(),
+        DriverMapScreen.id: (context) => DriverMapScreen(),
+        DriverDataScreen.id: (context) => DriverDataScreen(),
         EmployeeDetail.id: (context) => EmployeeDetail(),
       },
     );
