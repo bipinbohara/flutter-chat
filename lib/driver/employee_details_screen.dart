@@ -13,8 +13,8 @@ import '../screens/registration_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedInUser;
-String routeOfDriver;
-String driverShift;
+String routeOfDriver="route";
+String driverShift="shift";
 
 class EmployeeDetail extends StatefulWidget {
   static String id = "employee_detail_screen";
@@ -149,7 +149,7 @@ class EmployeeStream extends StatelessWidget {
           // String driverRoute;
 
           final employeeName = employeeData['name'];
-          //print("Name: " + employeeName);
+          //print("Name: " + routeOfDriver);
           final employeePhoneNumber = employeeData['phone_number'];
           //print("Number: " + employeePhoneNumber);
           final employeeLocation = employeeData['location'];
@@ -166,7 +166,8 @@ class EmployeeStream extends StatelessWidget {
             driverShift = employeeData['shift'];
             continue;
           }
-          if(!routeOfDriver.contains(employeeData['route']) && !driverShift.contains(employeeData['shift'])){
+          if (routeOfDriver!=employeeData['route'] &&
+              driverShift!=employeeData['shift']) {
             continue;
           }
           final currentUser = loggedInUser.email;
