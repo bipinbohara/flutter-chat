@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/driver/driver_data_screen.dart';
 import 'package:flash_chat/driver/driver_map_screen.dart';
+import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,12 +48,63 @@ class _EmployeeDetailState extends State<EmployeeDetail> {
     super.dispose();
   }
 
+  final driverUsername = DataUser().getLoggedInUserName();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("User: " + driverUsername),
         leading: null,
-        actions: <Widget>[],
+        actions: <Widget>[
+          StreamBuilder(
+            stream: _firestore.collection('users').snapshots(),
+            builder: (context, snapshot) {
+              final _employeeData = snapshot.data.docs;
+              List<DataUser> dataUsers = [];
+              final _loggedInUserName = '';
+              final countData = _employeeData.length;
+              for (var employee in _employeeData) {
+                final employeeData = employee.data();
+                final employeeName = employeeData['name'];
+                //print("Name: " + employeeName);
+                final employeePhoneNumber = employeeData['phone_number'];
+                //print("Number: " + employeePhoneNumber);
+                final employeeLocation = employeeData['location'];
+                final employeeRoute = employeeData['route'];
+                //print("Route: " + employeeRoute);
+                final employeeShift = employeeData['shift'];
+                //print("Shift: " + employeeShift);
+                final employeeUid = employeeData['uid'];
+                //print("UID: " + employeeUid);
+                final employeeRole = employeeData['role'];
+                //print("Role: " + employeeRole);
+
+                final dataUser = DataUser(
+                  name: employeeName,
+                  phoneNumber: employeePhoneNumber,
+                  location: employeeLocation,
+                  shift: employeeShift,
+                  route: employeeRoute,
+                  uid: employeeUid,
+                  role: employeeRole,
+                  loggedInUserUid: loggedInUser.uid,
+                  count: countData,
+                );
+                dataUsers.add(dataUser);
+                /*if (loggedInUser.uid == employeeUid &&
+                    employeeRole == "Driver") {
+                  print(employeeName);
+                  final _loggedInDriverUsername = employeeName;
+                }*/
+              }
+              return Center(
+                  child: Text(
+                "" /*driverUsername.toString()*/,
+              ));
+            },
+          )
+        ],
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(
@@ -69,6 +121,8 @@ class _EmployeeDetailState extends State<EmployeeDetail> {
 }
 
 class EmployeeStream extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -86,21 +140,20 @@ class EmployeeStream extends StatelessWidget {
         for (var employee in _employeeData) {
           final employeeData = employee.data();
           final employeeName = employeeData['name'];
-          print("Name: " + employeeName);
+          //print("Name: " + employeeName);
           final employeePhoneNumber = employeeData['phone_number'];
-          print("Number: " + employeePhoneNumber);
+          //print("Number: " + employeePhoneNumber);
           final employeeLocation = employeeData['location'];
           final employeeRoute = employeeData['route'];
-          print("Route: " + employeeRoute);
+          //print("Route: " + employeeRoute);
           final employeeShift = employeeData['shift'];
-          print("Shift: " + employeeShift);
+          //print("Shift: " + employeeShift);
           final employeeUid = employeeData['uid'];
-          print("UID: " + employeeUid);
+          //print("UID: " + employeeUid);
           final employeeRole = employeeData['role'];
-          print("Role: " + employeeRole);
+          //print("Role: " + employeeRole);
 
           final currentUser = loggedInUser.email;
-
           final employeeBubble = EmployeeBubble(
             name: employeeName,
             phoneNumber: employeePhoneNumber,
@@ -143,6 +196,8 @@ class EmployeeBubble extends StatelessWidget {
   final String uid;
   final String role;
 
+  //List<DataUser> dataUsers = [];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -180,5 +235,41 @@ class EmployeeBubble extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class DataUser {
+  final String name;
+  final String phoneNumber;
+  final GeoPoint location;
+  final String shift;
+  final String route;
+  final String uid;
+  final String role;
+  final String loggedInUserUid;
+  final int count;
+
+  DataUser({
+    this.name,
+    this.phoneNumber,
+    this.location,
+    this.shift,
+    this.route,
+    this.uid,
+    this.role,
+    this.loggedInUserUid,
+    this.count,
+  });
+
+  /*for(int i=0; i<count; i++){
+    if(i==0){
+      print(i);
+  }*/
+  String getLoggedInUserName() {
+    if (loggedInUserUid == uid && role == "Driver") {
+      print(name);
+      return name;
+    } else
+      return "Jack Sparrow";
   }
 }
