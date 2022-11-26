@@ -125,7 +125,6 @@ class _EmployeeDetailState extends State<EmployeeDetail> {
 class EmployeeStream extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
 
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -166,7 +165,8 @@ class EmployeeStream extends StatelessWidget {
             driverShift = employeeData['shift'];
             continue;
           }
-          if(!routeOfDriver.contains(employeeData['route']) && !driverShift.contains(employeeData['shift'])){
+          if (!routeOfDriver.contains(employeeData['route']) &&
+              !driverShift.contains(employeeData['shift'])) {
             continue;
           }
           // if (employeeData['role'] == "driver") {

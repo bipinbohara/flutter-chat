@@ -19,10 +19,20 @@ class DriverDataScreen extends StatefulWidget {
 }
 
 class _DriverDataScreenState extends State<DriverDataScreen> {
+  var selectedShift;
+  var selectedRoute;
+
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
   String shift;
   String route;
+
+  List<String> _shifts = <String>['Regular', 'Evening'];
+  List<String> _routes = <String>[
+    'Bhaktapur-Hattisar',
+    'Lalitpur-Hattisar',
+    'Kirtipur-Hattisar'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +49,7 @@ class _DriverDataScreenState extends State<DriverDataScreen> {
               SizedBox(
                 height: 48.0,
               ),
-              TextField(
+              /*TextField(
                 keyboardType: TextInputType.text,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -47,11 +57,37 @@ class _DriverDataScreenState extends State<DriverDataScreen> {
                 },
                 decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Enter your Route', labelText: "Route"),
+              ),*/
+              //Dropdown for Routes
+              DropdownButtonFormField(
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white))),
+                items: _routes
+                    .map((value) => DropdownMenuItem(
+                          child: Text(
+                            value,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          value: value,
+                        ))
+                    .toList(),
+                onChanged: (selectedUserRoute) {
+                  setState(() {
+                    selectedRoute = selectedUserRoute;
+                  });
+                },
+                value: selectedRoute,
+                isExpanded: false,
+                hint: Text(
+                  'Choose Your Route',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
               SizedBox(
                 height: 8.0,
               ),
-              TextField(
+              /*TextField(
                 keyboardType: TextInputType.text,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -59,6 +95,31 @@ class _DriverDataScreenState extends State<DriverDataScreen> {
                 },
                 decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Enter your Shift', labelText: "Shift"),
+              ),*/
+              DropdownButtonFormField(
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white))),
+                items: _shifts
+                    .map((value) => DropdownMenuItem(
+                          child: Text(
+                            value,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          value: value,
+                        ))
+                    .toList(),
+                onChanged: (selectedUserShift) {
+                  setState(() {
+                    selectedShift = selectedUserShift;
+                  });
+                },
+                value: selectedShift,
+                isExpanded: false,
+                hint: Text(
+                  'Choose Your Shift',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
               SizedBox(
                 height: 24.0,
@@ -76,8 +137,8 @@ class _DriverDataScreenState extends State<DriverDataScreen> {
                     'route': route,
                   });*/
                   Map<String, String> dataToUpdate = {
-                    'route': route,
-                    'shift': shift,
+                    'route': selectedRoute,
+                    'shift': selectedShift,
                   };
                   _firestore
                       .collection('users')
