@@ -7,6 +7,7 @@ import "dart:convert" as convert;
 import 'package:location/location.dart';
 
 User loggedin;
+
 class UserMapScreen extends StatefulWidget {
   static String id = "map_view_for_user";
   @override
@@ -22,20 +23,19 @@ class _MapScreenState extends State<UserMapScreen> {
       title: "Map",
       home: Scaffold(
         body: Column(
-            children: <Widget>[
-              Expanded(
-                  child: StreamBuilder(
-                      stream: Stream.periodic(const Duration(seconds: 5)),
-                      builder: (context, snapshot) {
-                        return GetCurrentLocation();
-                      }))
-            ],
+          children: <Widget>[
+            Expanded(
+                child: StreamBuilder(
+                    stream: Stream.periodic(const Duration(seconds: 5)),
+                    builder: (context, snapshot) {
+                      return GetCurrentLocation();
+                    }))
+          ],
         ),
       ),
     );
   }
 }
-
 
 // Get Real-Time Location
 class GetCurrentLocation extends StatelessWidget {
@@ -53,7 +53,9 @@ class GetCurrentLocation extends StatelessWidget {
         }
         print(snapshot.data);
         final LocationData currentLocation = snapshot.data;
-
+        final latLongUserValue = new LatLng(27.688300,
+            85.335585 /*currentLocation.latitude, currentLocation.longitude*/
+            );
         final latLongValue =
             new LatLng(currentLocation.latitude, currentLocation.longitude);
 
@@ -78,11 +80,22 @@ class GetCurrentLocation extends StatelessWidget {
                 new Marker(
                   width: 80.0,
                   height: 80.0,
-                  point: latLongValue,
+                  point: latLongUserValue,
                   builder: (BuildContext context) => const Icon(
                       Icons.location_on,
                       size: 60.0,
                       color: Colors.lightBlue),
+                ),
+              ],
+            ),
+            new MarkerLayer(
+              markers: [
+                new Marker(
+                  width: 80.0,
+                  height: 80.0,
+                  point: latLongValue,
+                  builder: (BuildContext context) => const Icon(Icons.train,
+                      size: 60.0, color: Colors.lightBlue),
                 ),
               ],
             ),
