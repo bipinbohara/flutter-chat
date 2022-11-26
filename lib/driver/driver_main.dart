@@ -9,6 +9,7 @@ import 'package:flash_chat/components/rounded_button.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import '../screens/login_screen.dart';
 import '../screens/registration_screen.dart';
+import 'employee_details_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedInUser;
@@ -91,6 +92,13 @@ class _DriverMainState extends State<DriverMain> {
               colour: Colors.blueAccent,
               onPressed: () {
                 Navigator.pushNamed(context, DriverMapScreen.id);
+              },
+            ),
+            RoundedButton(
+              title: "Employee Details",
+              colour: Colors.blueAccent,
+              onPressed: () {
+                Navigator.pushNamed(context, EmployeeDetail.id);
               },
             ),
           ],
