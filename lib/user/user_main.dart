@@ -68,7 +68,7 @@ class _UserMainState extends State<UserMain> {
                 ),
                 AnimatedTextKit(animatedTexts: [
                   WavyAnimatedText(
-                    'HackFest',
+                    'Cotiviti Go',
                     textStyle: TextStyle(
                       fontSize: 45.0,
                       fontWeight: FontWeight.w900,
