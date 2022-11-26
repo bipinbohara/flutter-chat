@@ -111,6 +111,20 @@ class GetCurrentLocation extends StatelessWidget {
               urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
               subdomains: ['a', 'b', 'c'],
             ),
+            new PolylineLayer(
+              polylineCulling: false,
+              polylines: [
+                Polyline(
+                  points: [
+                    LatLng(27.688300, 85.335585),
+                    LatLng(27.694767, 85.320774),
+                    LatLng(27.711656, 85.322068),
+                  ],
+                  color: Colors.blue,
+                  strokeWidth: 4,
+                )
+              ],
+            ),
             new MarkerLayer(
               markers: [
                 new Marker(
