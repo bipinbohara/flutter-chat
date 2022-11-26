@@ -13,6 +13,8 @@ import '../screens/registration_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedInUser;
+String routeOfDriver;
+String driverShift;
 
 class EmployeeDetail extends StatefulWidget {
   static String id = "employee_detail_screen";
@@ -123,6 +125,7 @@ class _EmployeeDetailState extends State<EmployeeDetail> {
 class EmployeeStream extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
 
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -137,10 +140,13 @@ class EmployeeStream extends StatelessWidget {
         }
         final _employeeData = snapshot.data.docs;
         List<EmployeeBubble> employeeBubbles = [];
-        for (var employee in _employeeData) {
+        final countData = _employeeData.length;
+        // for (var employee in _employeeData) {
+        for (var i = 0; i < countData; i++) {
+          var employee = _employeeData[i];
           final employeeData = employee.data();
           // Check route
-          String driverRoute;
+          // String driverRoute;
 
           final employeeName = employeeData['name'];
           //print("Name: " + employeeName);
@@ -155,13 +161,19 @@ class EmployeeStream extends StatelessWidget {
           //print("UID: " + employeeUid);
           final employeeRole = employeeData['role'];
           //print("Role: " + employeeRole);
-
           if (employeeData['role'] == "driver") {
-            driverRoute = employeeData['route'];
-            print("Driver Route: " + driverRoute);
-            print("Employee Route: " + employeeData['route']);
+            routeOfDriver = employeeData['route'];
+            driverShift = employeeData['shift'];
             continue;
           }
+          if(!routeOfDriver.contains(employeeData['route']) && !driverShift.contains(employeeData['shift'])){
+            continue;
+          }
+          // if (employeeData['role'] == "driver") {
+          //   driverRoute = employeeData['route'];
+          // }
+          print("Driver Route: " + routeOfDriver);
+          print("Employee route: " + employeeData['route']);
 
           /*if (driverRoute != employeeData['route']) {
             print("Driver Route: " + driverRoute);
