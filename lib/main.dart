@@ -4,14 +4,16 @@ import 'package:flash_chat/driver/driver_data_screen.dart';
 import 'package:flash_chat/driver/driver_main.dart';
 import 'package:flash_chat/driver/driver_map_screen.dart';
 import 'package:flash_chat/screens/map_view.dart';
-import 'package:flash_chat/user/map_view_user.dart';
+import 'package:flash_chat/user/user_data_screen.dart';
+import 'package:flash_chat/user/user_map_screen.dart';
+import 'package:flash_chat/user/user_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/map_view.dart';
-import 'package:flash_chat/user/map_view_user.dart';
+import 'package:flash_chat/user/user_map_screen.dart';
 
 void main() async {
   //Ensure that Firebase is initialized
@@ -34,10 +36,12 @@ class FlashChat extends StatelessWidget {
         RegistrationScreen.id: (context) => RegistrationScreen(),
         ChatScreen.id: (context) => ChatScreen(),
         MapScreen.id: (context) => MapScreen(),
-        MapScreenUser.id: (context) => MapScreenUser(),
         DriverMain.id: (context) => DriverMain(),
         DriverMapScreen.id: (context) => DriverMapScreen(),
         DriverDataScreen.id: (context) => DriverDataScreen(),
+        UserMain.id: (context) => UserMain(),
+        UserMapScreen.id: (context) => UserMapScreen(),
+        UserDataScreen.id: (context) => UserDataScreen()
       },
     );
   }

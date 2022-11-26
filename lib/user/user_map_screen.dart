@@ -7,13 +7,13 @@ import "dart:convert" as convert;
 import 'package:location/location.dart';
 
 User loggedin;
-class MapScreenUser extends StatefulWidget {
+class UserMapScreen extends StatefulWidget {
   static String id = "map_view_for_user";
   @override
   _MapScreenState createState() => _MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreenUser> {
+class _MapScreenState extends State<UserMapScreen> {
   //final String apiKey = "8YO7lZRPUyq5TY9Lx1hufSLsGmn1gWUe";
 
   @override

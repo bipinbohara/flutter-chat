@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/driver/driver_main.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
+import 'package:flash_chat/user/user_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import '../user/map_view_user.dart';
+import '../user/user_map_screen.dart';
 import 'map_view.dart';
 
 final _firestore = FirebaseFirestore.instance;
@@ -91,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                       if (_auth.currentUser.uid ==
                           "EQeXR1MUMDQ23gDQBqj7zgdfqe03") {
-                        Navigator.pushNamed(context, MapScreen.id);
+                        Navigator.pushNamed(context, UserMain.id);
                       }
                       //Navigator.pushNamed(context, ChatScreen.id);
                     }
