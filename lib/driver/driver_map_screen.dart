@@ -23,7 +23,7 @@ class DriverMapScreen extends StatefulWidget {
 class _DriverMapScreenState extends State<DriverMapScreen> {
   final _auth = FirebaseAuth.instance;
   final _employeeDetails =
-      _firestore.collection('users').doc('OR3Oy9cv1RVd8Jk2lioXMSWJY8z1');
+      _firestore.collection('users').doc('EQeXR1MUMDQ23gDQBqj7zgdfqe03');
 
   @override
   void initState() {
@@ -90,11 +90,13 @@ class GetCurrentLocation extends StatelessWidget {
         print(snapshot.data);
         final LocationData currentLocation = snapshot.data;
 
-        final latLongValue =
+        final latLongUserValue = new LatLng(27.6915,
+            85.342 /*currentLocation.latitude, currentLocation.longitude*/
+            );
+        final latLongDriverValue =
             new LatLng(currentLocation.latitude, currentLocation.longitude);
-
         return FlutterMap(
-          options: new MapOptions(center: latLongValue, zoom: 13.0),
+          options: new MapOptions(center: latLongUserValue, zoom: 13.0),
           nonRotatedChildren: [
             AttributionWidget.defaultWidget(
               source: 'OpenStreetMap',
@@ -114,11 +116,20 @@ class GetCurrentLocation extends StatelessWidget {
                 new Marker(
                   width: 80.0,
                   height: 80.0,
-                  point: latLongValue,
-                  builder: (BuildContext context) => const Icon(
-                      Icons.location_on,
-                      size: 60.0,
-                      color: Colors.lightBlue),
+                  point: latLongUserValue,
+                  builder: (BuildContext context) => const Icon(Icons.man,
+                      size: 60.0, color: Colors.lightBlue),
+                ),
+              ],
+            ),
+            new MarkerLayer(
+              markers: [
+                new Marker(
+                  width: 80.0,
+                  height: 80.0,
+                  point: latLongDriverValue,
+                  builder: (BuildContext context) => const Icon(Icons.train,
+                      size: 60.0, color: Colors.lightBlue),
                 ),
               ],
             ),

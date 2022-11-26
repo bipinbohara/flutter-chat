@@ -139,6 +139,9 @@ class EmployeeStream extends StatelessWidget {
         List<EmployeeBubble> employeeBubbles = [];
         for (var employee in _employeeData) {
           final employeeData = employee.data();
+          // Check route
+          String driverRoute;
+
           final employeeName = employeeData['name'];
           //print("Name: " + employeeName);
           final employeePhoneNumber = employeeData['phone_number'];
@@ -152,6 +155,18 @@ class EmployeeStream extends StatelessWidget {
           //print("UID: " + employeeUid);
           final employeeRole = employeeData['role'];
           //print("Role: " + employeeRole);
+
+          if (employeeData['role'] == "driver") {
+            driverRoute = employeeData['route'];
+            print("Driver Route: " + driverRoute);
+            print("Employee Route: " + employeeData['route']);
+            continue;
+          }
+
+          /*if (driverRoute != employeeData['route']) {
+            print("Driver Route: " + driverRoute);
+            continue;
+          }*/
 
           final currentUser = loggedInUser.email;
           final employeeBubble = EmployeeBubble(
