@@ -95,10 +95,8 @@ class GetCurrentLocation extends StatelessWidget {
                   width: 80.0,
                   height: 80.0,
                   point: latLongUserValue,
-                  builder: (BuildContext context) => const Icon(
-                      Icons.location_on,
-                      size: 60.0,
-                      color: Colors.lightBlue),
+                  builder: (BuildContext context) => const Icon(Icons.man,
+                      size: 60.0, color: Colors.lightBlue),
                 ),
               ],
             ),
