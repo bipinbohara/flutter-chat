@@ -165,7 +165,7 @@ class EmployeeStream extends StatelessWidget {
             driverShift = employeeData['shift'];
             continue;
           }
-          if (routeOfDriver != employeeData['route'] &&
+          if (routeOfDriver != employeeData['route'] ||
               driverShift != employeeData['shift']) {
             continue;
           }

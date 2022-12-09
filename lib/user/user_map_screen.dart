@@ -53,12 +53,18 @@ class GetCurrentLocation extends StatelessWidget {
         }
         print(snapshot.data);
         final LocationData currentLocation = snapshot.data;
-        final latLongUserValue = new LatLng(27.688300,
-            85.335585 /*currentLocation.latitude, currentLocation.longitude*/
-            );
+        final latLongUserValue =
+            new LatLng(currentLocation.latitude, currentLocation.longitude);
+        print("Employee Location: " +
+            currentLocation.latitude.toString() +
+            ', ' +
+            currentLocation.longitude.toString());
         final latLongValue =
             new LatLng(currentLocation.latitude, currentLocation.longitude);
-
+        print("Driver Location: " +
+            currentLocation.latitude.toString() +
+            ', ' +
+            currentLocation.longitude.toString());
         return FlutterMap(
           options: new MapOptions(center: latLongValue, zoom: 13.0),
           nonRotatedChildren: [
