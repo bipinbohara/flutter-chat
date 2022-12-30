@@ -101,6 +101,14 @@ class _DriverMainState extends State<DriverMain> {
                 Navigator.pushNamed(context, EmployeeDetail.id);
               },
             ),
+            RoundedButton(
+              title: "Logout",
+              colour: Colors.lightBlueAccent,
+              onPressed: () {
+                _auth.signOut();
+                Navigator.pushNamed(context, LoginScreen.id);
+              },
+            ),
           ],
         ),
       ),

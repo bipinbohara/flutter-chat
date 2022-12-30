@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../user/user_map_screen.dart';
 import 'map_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -19,12 +20,38 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    _loadUserEmailPassword();
+    super.initState();
+  }
+
   final _auth = FirebaseAuth.instance;
   final _userUid =
       _firestore.collection('users').doc('OR3Oy9cv1RVd8Jk2lioXMSWJY8z1');
   bool showSpinner = false;
   String email;
   String password;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  void _loadUserEmailPassword() async {
+    print("Load Email");
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      var _email = _prefs.getString("email") ?? "";
+      var _password = _prefs.getString("password") ?? "";
+
+      print(_email);
+      print(_password);
+
+      setState(() {});
+      _emailController.text = _email ?? "";
+      _passwordController.text = _password ?? "";
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 48.0,
               ),
               TextField(
+                controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -63,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 8.0,
               ),
               TextField(
+                controller: _passwordController,
                 obscureText: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -82,8 +111,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     showSpinner = true;
                   });
                   try {
+                    SharedPreferences.getInstance().then(
+                      (prefs) {
+                        prefs.setString('email', email);
+                        prefs.setString('password', password);
+                      },
+                    );
                     final user = await _auth.signInWithEmailAndPassword(
-                        email: email, password: password);
+                        email: _emailController.text,
+                        password: _passwordController.text);
+                    print(email);
+                    print(password);
+                    // Locally save data
                     if (user != null) {
                       // Navigator.pushNamed(context, MapScreen.id);
                       if (_auth.currentUser.uid ==

@@ -103,6 +103,14 @@ class _UserMainState extends State<UserMain> {
                 Navigator.pushNamed(context, DriverDetail.id);
               },
             ),
+            RoundedButton(
+              title: "Logout",
+              colour: Colors.lightBlueAccent,
+              onPressed: () {
+                _auth.signOut();
+                Navigator.pushNamed(context, LoginScreen.id);
+              },
+            ),
           ],
         ),
       ),

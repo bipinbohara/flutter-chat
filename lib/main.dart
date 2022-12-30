@@ -4,6 +4,7 @@ import 'package:flash_chat/driver/driver_data_screen.dart';
 import 'package:flash_chat/driver/driver_main.dart';
 import 'package:flash_chat/driver/driver_map_screen.dart';
 import 'package:flash_chat/driver/employee_details_screen.dart';
+import 'package:flash_chat/screens/login2.dart';
 import 'package:flash_chat/screens/map_view.dart';
 import 'package:flash_chat/user/driver_details_screen.dart';
 import 'package:flash_chat/user/user_data_screen.dart';
@@ -31,8 +32,9 @@ class FlashChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //home: WelcomeScreen(),
-      initialRoute: WelcomeScreen.id,
+      initialRoute: LoginScreen.id,
       routes: {
+        LoginPage.id: (context) => LoginPage(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
