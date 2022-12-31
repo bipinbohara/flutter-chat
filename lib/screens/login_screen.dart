@@ -23,6 +23,22 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     _loadUserEmailPassword();
+    final user = _auth.signInWithEmailAndPassword(
+        email: _emailController.text, password: _passwordController.text);
+    print(email);
+    print(password);
+    // Locally save data
+    if (user != null) {
+      // Navigator.pushNamed(context, MapScreen.id);
+      if (_auth.currentUser.uid == "OR3Oy9cv1RVd8Jk2lioXMSWJY8z1") {
+        Navigator.pushNamed(context, DriverMain.id);
+      }
+      if (_auth.currentUser.uid == "EQeXR1MUMDQ23gDQBqj7zgdfqe03" ||
+          _auth.currentUser.uid == "uIuDTEUiEAhqfwOFa2N0xJvxxug2") {
+        Navigator.pushNamed(context, UserMain.id);
+      }
+      //Navigator.pushNamed(context, ChatScreen.id);
+    }
     super.initState();
   }
 
