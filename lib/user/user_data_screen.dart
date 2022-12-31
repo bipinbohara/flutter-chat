@@ -7,6 +7,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'user_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -18,8 +19,6 @@ class UserDataScreen extends StatefulWidget {
 
   @override
   _UserDataScreenState createState() => _UserDataScreenState();
-
-
 }
 
 void getCurrentUser() async {
@@ -40,6 +39,12 @@ void getCurrentUser() async {
 }
 
 class _UserDataScreenState extends State<UserDataScreen> {
+  @override
+  void initState() {
+    _loadUserShiftRoute();
+    super.initState();
+  }
+
   var selectedShift;
   var selectedRoute;
 
@@ -47,20 +52,32 @@ class _UserDataScreenState extends State<UserDataScreen> {
   bool showSpinner = false;
   String shift;
   String route;
-  List<String> _shifts = <String>[
-    'Regular',
-    'Evening'
-  ];
+  List<String> _shifts = <String>['Regular', 'Evening'];
   List<String> _routes = <String>[
     'Bhaktapur-Hattisar',
     'Lalitpur-Hattisar',
     'Kirtipur-Hattisar'
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
+  TextEditingController _shiftUserController = TextEditingController();
+  TextEditingController _routeUserController = TextEditingController();
+
+  void _loadUserShiftRoute() async {
+    print("Load Route and Shift");
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      var __shiftUser = _prefs.getString("shiftUser") ?? "Regular";
+      var __routeUser = _prefs.getString("routeUser") ?? "Bhaktapur-Hattisar";
+
+      print("Shift: " + __shiftUser);
+      print("Route: " + __routeUser);
+
+      setState(() {});
+      _shiftUserController.text = __shiftUser ?? "";
+      _routeUserController.text = __routeUser ?? "";
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -79,73 +96,81 @@ class _UserDataScreenState extends State<UserDataScreen> {
                 height: 48.0,
               ),
               //Dropdown for Routes
-              DropdownButtonFormField (
+              DropdownButtonFormField(
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white))),
-                items: _routes.map((value) => DropdownMenuItem(
-                  child: Text(
-                    value,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  value: value,
-                )).toList(),
-                onChanged: (selectedUserRoute){
-                  setState(() {
-                    selectedRoute=selectedUserRoute;
-                  });
+                items: _routes
+                    .map((value) => DropdownMenuItem(
+                          child: Text(
+                            value,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          value: value,
+                        ))
+                    .toList(),
+                onChanged: (selectedUserRoute) {
+                  setState(
+                    () {
+                      selectedRoute = selectedUserRoute;
+                    },
+                  );
+                  SharedPreferences.getInstance().then(
+                    (prefs) {
+                      prefs.setString('routeUser', selectedRoute);
+                      print("Set User Route: " + selectedRoute);
+                    },
+                  );
                 },
-                value:selectedRoute ,
+                //value: selectedRoute,
+                value: _routeUserController.text,
                 isExpanded: false,
-                hint:Text('Choose Your Route',
-                  style: TextStyle(color: Colors.black),),
+                hint: Text(
+                  'Choose Your Route',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
 
-
-              // TextField(
-              //   keyboardType: TextInputType.text,
-              //   textAlign: TextAlign.center,
-              //   onChanged: (value) {
-              //     route = value;
-              //   },
-              //   decoration: kTextFieldDecoration.copyWith(
-              //       hintText: 'Enter your Route', labelText: "Route"),
-              // ),
               SizedBox(
                 height: 8.0,
               ),
-              DropdownButtonFormField (
+              DropdownButtonFormField(
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white))),
-                  items: _shifts.map((value) => DropdownMenuItem(
-                      child: Text(
-                        value,
-                        style: TextStyle(color: Colors.black),
+                items: _shifts
+                    .map(
+                      (value) => DropdownMenuItem(
+                        child: Text(
+                          value,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        value: value,
                       ),
-                    value: value,
-                  )).toList(),
-                onChanged: (selectedUserShift){
-                    setState(() {
-                      selectedShift=selectedUserShift;
-                    });
+                    )
+                    .toList(),
+                onChanged: (selectedUserShift) {
+                  setState(
+                    () {
+                      selectedShift = selectedUserShift;
+                    },
+                  );
+                  SharedPreferences.getInstance().then(
+                    (prefs) {
+                      prefs.setString('shiftUser', selectedShift);
+                      print("Set Shift: " + selectedShift);
+                    },
+                  );
                 },
-                value:selectedShift ,
+                //value: selectedShift,
+                value: _shiftUserController.text,
                 isExpanded: false,
-                hint:Text('Choose Your Shift',
-                style: TextStyle(color: Colors.black),),
+                hint: Text(
+                  'Choose Your Shift',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
 
-
-              // TextField(
-              //   keyboardType: TextInputType.text,
-              //   textAlign: TextAlign.center,
-              //   onChanged: (value) {
-              //     shift = value;
-              //   },
-              //   decoration: kTextFieldDecoration.copyWith(
-              //       hintText: 'Enter your Shift', labelText: "Shift"),
-              // ),
               SizedBox(
                 height: 24.0,
               ),
@@ -165,6 +190,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
                     'route': selectedRoute,
                     'shift': selectedShift,
                   };
+                  print("Route to save: " + selectedRoute);
+                  print("Shift to save: " + selectedShift);
                   _firestore
                       .collection('users')
                       .doc('mWGEkORb1wfqNvzCKEym')

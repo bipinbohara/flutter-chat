@@ -33,7 +33,7 @@ class _DriverMainState extends State<DriverMain> {
 
       if (user != null) {
         loggedInUser = user;
-        print("UserID: " + loggedInUser.uid);
+        //print("UserID: " + loggedInUser.uid);
       }
     } catch (e) {
       print(e);

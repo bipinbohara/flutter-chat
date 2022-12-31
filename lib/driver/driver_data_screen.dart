@@ -7,6 +7,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'driver_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedInUser;
@@ -19,6 +20,12 @@ class DriverDataScreen extends StatefulWidget {
 }
 
 class _DriverDataScreenState extends State<DriverDataScreen> {
+  @override
+  void initState() {
+    _loadUserShiftRoute();
+    super.initState();
+  }
+
   var selectedShift;
   var selectedRoute;
 
@@ -33,6 +40,28 @@ class _DriverDataScreenState extends State<DriverDataScreen> {
     'Lalitpur-Hattisar',
     'Kirtipur-Hattisar'
   ];
+
+  TextEditingController _shiftDriverController = TextEditingController();
+  TextEditingController _routeDriverController = TextEditingController();
+
+  void _loadUserShiftRoute() async {
+    print("Load Route and Shift");
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      var __shiftDriver = _prefs.getString("shiftDriver") ?? "Regular";
+      var __routeDriver =
+          _prefs.getString("routeDriver") ?? "Bhaktapur-Hattisar";
+
+      print("Shift: " + __shiftDriver);
+      print("Route: " + __routeDriver);
+
+      setState(() {});
+      _shiftDriverController.text = __shiftDriver ?? "";
+      _routeDriverController.text = __routeDriver ?? "";
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,72 +78,79 @@ class _DriverDataScreenState extends State<DriverDataScreen> {
               SizedBox(
                 height: 48.0,
               ),
-              /*TextField(
-                keyboardType: TextInputType.text,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  route = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your Route', labelText: "Route"),
-              ),*/
               //Dropdown for Routes
               DropdownButtonFormField(
                 decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white))),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                ),
                 items: _routes
-                    .map((value) => DropdownMenuItem(
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          value: value,
-                        ))
+                    .map(
+                      (value) => DropdownMenuItem(
+                        child: Text(
+                          value,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        value: value,
+                      ),
+                    )
                     .toList(),
                 onChanged: (selectedUserRoute) {
-                  setState(() {
-                    selectedRoute = selectedUserRoute;
-                  });
+                  setState(
+                    () {
+                      selectedRoute = selectedUserRoute;
+                    },
+                  );
+                  SharedPreferences.getInstance().then(
+                    (prefs) {
+                      prefs.setString('routeDriver', selectedRoute);
+                      print("Set Driver Route: " + selectedRoute);
+                    },
+                  );
                 },
-                value: selectedRoute,
+                value: _routeDriverController.text,
                 isExpanded: false,
                 hint: Text(
                   'Choose Your Route',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
+
               SizedBox(
                 height: 8.0,
               ),
-              /*TextField(
-                keyboardType: TextInputType.text,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  shift = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your Shift', labelText: "Shift"),
-              ),*/
+
               DropdownButtonFormField(
                 decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white))),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                ),
                 items: _shifts
-                    .map((value) => DropdownMenuItem(
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          value: value,
-                        ))
+                    .map(
+                      (value) => DropdownMenuItem(
+                        child: Text(
+                          value,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        value: value,
+                      ),
+                    )
                     .toList(),
                 onChanged: (selectedUserShift) {
-                  setState(() {
-                    selectedShift = selectedUserShift;
-                  });
+                  setState(
+                    () {
+                      selectedShift = selectedUserShift;
+                    },
+                  );
+                  SharedPreferences.getInstance().then(
+                    (prefs) {
+                      prefs.setString('shiftDriver', selectedShift);
+                      print("Set Driver Shift: " + selectedShift);
+                    },
+                  );
                 },
-                value: selectedShift,
+                value: _shiftDriverController.text,
                 isExpanded: false,
                 hint: Text(
                   'Choose Your Shift',
@@ -131,7 +167,6 @@ class _DriverDataScreenState extends State<DriverDataScreen> {
                   setState(() {
                     showSpinner = false;
                   });
-
                   /*_firestore.collection('users').doc().add({
                     'shift': shift,
                     'route': route,
@@ -140,6 +175,9 @@ class _DriverDataScreenState extends State<DriverDataScreen> {
                     'route': selectedRoute,
                     'shift': selectedShift,
                   };
+                  print("Route to save: " + selectedRoute);
+                  print("Shift to save: " + selectedShift);
+
                   _firestore
                       .collection('users')
                       .doc('OR3Oy9cv1RVd8Jk2lioXMSWJY8z1')
